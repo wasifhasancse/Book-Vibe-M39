@@ -21,6 +21,22 @@ const ReadList = () => {
       setFilterData(filter);
     }
   }, [sortingType, readListData]);
+
+  if (filtersData.length === 0) {
+    return (
+      <div className="rounded-3xl border border-slate-200 bg-white/90 px-6 py-14 text-center">
+        <p className="text-xs font-bold uppercase tracking-[0.18em] text-slate-400">
+          Read List Empty
+        </p>
+        <h3 className="mt-3 text-2xl font-black tracking-tight text-slate-900">
+          No books in your read list yet
+        </h3>
+        <p className="mx-auto mt-2 max-w-md text-sm text-slate-500">
+          Add books from the details page and they will appear here.
+        </p>
+      </div>
+    );
+  }
   return (
     <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
       {filtersData.map((book, index) => (
