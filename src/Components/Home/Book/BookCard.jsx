@@ -1,22 +1,12 @@
-import { useContext } from "react";
 import { IoIosStar, IoIosStarHalf, IoIosStarOutline } from "react-icons/io";
 import { Link } from "react-router";
-import {
-  BookContext,
-} from "../../../Context/BookContextProvider";
 
 const BookCard = ({ book }) => {
-  const { setSelectedBookData } = useContext(BookContext);
-
-  const manageBookDetails = () => {
-    setSelectedBookData(book);
-  };
   const { image, tags, bookName, author, category, rating, totalPages } = book;
 
   return (
     <Link
       to={`/bookDetails/${book.bookId}`}
-      onClick={manageBookDetails}
       className="group flex h-full flex-col rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-md hover:shadow-emerald-100/70"
     >
       <div className="overflow-hidden rounded-2xl bg-linear-to-br from-slate-50 via-emerald-50/60 to-cyan-50 px-6 py-5">

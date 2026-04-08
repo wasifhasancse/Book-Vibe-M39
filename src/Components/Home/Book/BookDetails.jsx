@@ -1,22 +1,14 @@
+import { useContext } from "react";
 import { IoIosStar, IoIosStarHalf, IoIosStarOutline } from "react-icons/io";
 import { useLoaderData, useParams } from "react-router";
+import { BookContext } from "../../../Context/BookContextProvider";
 
 const BookDetails = () => {
+  const {manageWishList,manageReadList} = useContext(BookContext)
   const booksData = useLoaderData()
   const { bookId } = useParams();
-
   const selectedBookData = booksData.find(book => book.bookId == bookId)
 
-
-  if (!selectedBookData) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-white">
-        <p className="text-lg font-semibold text-slate-500">
-          Loading book details...
-        </p>
-      </div>
-    );
-  }
 
   const {
     image,
@@ -133,10 +125,10 @@ const BookDetails = () => {
 
             {/* Action Buttons */}
             <div className="mt-8 flex flex-wrap gap-3">
-              <button className="flex-1 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:bg-slate-700">
-                Add to List
+              <button onClick={()=>manageWishList(selectedBookData)} className="flex-1 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition duration-200 hover:bg-slate-700">
+                Add to Wish List
               </button>
-              <button className="flex-1 rounded-full border border-emerald-300 bg-emerald-50 px-6 py-3 text-sm font-semibold text-emerald-700 transition duration-200 hover:bg-emerald-100">
+              <button onClick={()=>manageReadList(selectedBookData)} className="flex-1 rounded-full border border-emerald-300 bg-emerald-50 px-6 py-3 text-sm font-semibold text-emerald-700 transition duration-200 hover:bg-emerald-100">
                 Mark as Read
               </button>
             </div>
