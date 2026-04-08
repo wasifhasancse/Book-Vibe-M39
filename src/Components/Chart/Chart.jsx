@@ -77,6 +77,7 @@ const Chart = () => {
   const grid = { strokeDasharray: "3 3", stroke: "#e2e8f0", vertical: false };
   const syncId = "bookSync";
   const margin = { top: 10, right: 20, left: 0, bottom: 0 };
+  const areaChartMargin = { top: 10, right: 20, left: 0, bottom: 26 };
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-linear-to-b from-[#fff9f2] via-[#fffefc] to-[#ecfdfa] px-4 py-10 sm:px-6 lg:px-8">
@@ -191,56 +192,70 @@ const Chart = () => {
               title="Publishing Year"
               subtitle="Timeline"
             />
-            <ResponsiveContainer width="100%" height={220}>
-              <AreaChart data={chartData} syncId={syncId} margin={margin}>
-                <defs>
-                  <linearGradient id="amberGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.35} />
-                    <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <CartesianGrid {...grid} />
-                <XAxis
-                  dataKey="name"
-                  tick={axisStyle}
-                  tickLine={false}
-                  axisLine={false}
-                />
-                <YAxis
-                  tick={axisStyle}
-                  tickLine={false}
-                  axisLine={false}
-                  domain={["auto", "auto"]}
-                  width={45}
-                />
-                <Tooltip
-                  content={<DarkTooltip unit="" />}
-                  cursor={{
-                    stroke: "#f59e0b",
-                    strokeWidth: 1,
-                    strokeDasharray: "4 2",
-                  }}
-                />
-                <Brush
-                  dataKey="name"
-                  height={34}
-                  stroke="#cbd5e1"
-                  fill="#f1f5f9"
-                  travellerWidth={10}
-                  tickFormatter={() => ""}
-                  style={{ marginTop: 10 }}
-                />
-                <Area
-                  type="monotone"
-                  dataKey="year"
-                  stroke="#f59e0b"
-                  strokeWidth={2}
-                  fill="url(#amberGrad)"
-                  dot={{ fill: "#f59e0b", r: 3, strokeWidth: 0 }}
-                  activeDot={{ r: 5, fill: "#fbbf24", strokeWidth: 0 }}
-                />
-              </AreaChart>
-            </ResponsiveContainer>
+            <p className="mb-3 px-1 text-xs font-medium text-slate-500">
+              Use the range controller below to choose which books stay visible
+              in this chart.
+            </p>
+            <div className="relative">
+              <ResponsiveContainer width="100%" height={260}>
+                <AreaChart
+                  data={chartData}
+                  syncId={syncId}
+                  margin={areaChartMargin}
+                >
+                  <defs>
+                    <linearGradient id="amberGrad" x1="0" y1="0" x2="0" y2="1">
+                      <stop
+                        offset="5%"
+                        stopColor="#f59e0b"
+                        stopOpacity={0.35}
+                      />
+                      <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid {...grid} />
+                  <XAxis
+                    dataKey="name"
+                    tick={axisStyle}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <YAxis
+                    tick={axisStyle}
+                    tickLine={false}
+                    axisLine={false}
+                    domain={["auto", "auto"]}
+                    width={45}
+                  />
+                  <Tooltip
+                    content={<DarkTooltip unit="" />}
+                    cursor={{
+                      stroke: "#f59e0b",
+                      strokeWidth: 1,
+                      strokeDasharray: "4 2",
+                    }}
+                  />
+                  <Brush
+                    dataKey="name"
+                    height={34}
+                    stroke="#cbd5e1"
+                    fill="#f1f5f9"
+                    travellerWidth={10}
+                    tickFormatter={() => ""}
+                    style={{ marginTop: 18 }}
+                  />
+                  <Area
+                    type="monotone"
+                    dataKey="year"
+                    stroke="#f59e0b"
+                    strokeWidth={2}
+                    fill="url(#amberGrad)"
+                    dot={{ fill: "#f59e0b", r: 3, strokeWidth: 0 }}
+                    activeDot={{ r: 5, fill: "#fbbf24", strokeWidth: 0 }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
           </div>
         </div>
       </div>
