@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router";
 import App from "../App";
+import Chart from "../Components/Chart/Chart";
+import Error from "../Components/Error/Error";
 import BookDetails from "../Components/Home/Book/BookDetails";
 import Home from "../Components/Home/Home";
 import ListedBook from "../Components/Home/ListedBook/ListedBook";
-import WishList from "../Components/Home/ListedBook/WishList";
 import ReadList from "../Components/Home/ListedBook/ReadList";
-import Error from "../Components/Error/Error";
+import WishList from "../Components/Home/ListedBook/WishList";
 
 export const router = createBrowserRouter([
   {
@@ -26,17 +27,21 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            Component: WishList
+            Component: WishList,
           },
           {
-            path: '/listedBooks/readList',
-            Component: ReadList
-          }
-        ]
+            path: "/listedBooks/readList",
+            Component: ReadList,
+          },
+        ],
       },
       {
         path: "/pagesToRead",
-        element: <h2>Page to Read</h2>,
+        loader: async () => {
+          const response = await fetch("/data/booksData.json");
+          return response.json();
+        },
+        Component: Chart,
       },
       {
         path: "/bookDetails/:bookId",
@@ -48,7 +53,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "*",
-        Component: Error
+        Component: Error,
       },
     ],
   },
