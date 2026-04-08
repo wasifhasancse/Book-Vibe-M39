@@ -1,15 +1,17 @@
-import { Outlet } from 'react-router'
-import './App.css'
-import Navbar from './Components/Navbar/Navbar'
-
+import { Outlet } from "react-router";
+import "./App.css";
+import Navbar from "./Components/Navbar/Navbar";
+import BookContextProvider from "./Context/BookContextProvider";
 
 function App() {
-
-  return (<>
-    <Navbar />
-    <Outlet/>
-  </>
-  )
+  return (
+    <>
+      <BookContextProvider>
+        <Navbar />
+        <Outlet />
+      </BookContextProvider>
+    </>
+  );
 }
 
-export default App
+export default App;

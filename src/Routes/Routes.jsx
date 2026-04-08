@@ -1,5 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import App from "../App";
+import BookDetails from "../Components/Home/Book/BookDetails";
 import Home from "../Components/Home/Home";
 
 export const router = createBrowserRouter([
@@ -22,6 +23,18 @@ export const router = createBrowserRouter([
       {
         path: "/pagesToRead",
         element: <h2>Page to Read</h2>,
+      },
+      {
+        path: "/bookDetails/:bookId",
+        loader: async () => {
+          const response = await fetch("/data/booksData.json");
+          return response.json();
+        },
+        Component: BookDetails,
+      },
+      {
+        path: "*",
+        element: <p>404</p>,
       },
     ],
   },

@@ -1,39 +1,55 @@
+import { useContext } from "react";
 import { IoIosStar, IoIosStarHalf, IoIosStarOutline } from "react-icons/io";
+import { Link } from "react-router";
+import {
+  BookContext,
+} from "../../../Context/BookContextProvider";
 
 const BookCard = ({ book }) => {
+  const { setSelectedBookData } = useContext(BookContext);
+
+  const manageBookDetails = () => {
+    setSelectedBookData(book);
+  };
   const { image, tags, bookName, author, category, rating, totalPages } = book;
 
   return (
-    <article className="group flex h-full flex-col rounded-[28px] border border-slate-200 bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-emerald-100/70">
-      <div className="rounded-3xl bg-linear-to-br from-slate-50 via-emerald-50/60 to-cyan-50 p-7">
+    <Link
+      to={`/bookDetails/${book.bookId}`}
+      onClick={manageBookDetails}
+      className="group flex h-full flex-col rounded-3xl border border-slate-200/80 bg-white p-5 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-emerald-200 hover:shadow-md hover:shadow-emerald-100/70"
+    >
+      <div className="overflow-hidden rounded-2xl bg-linear-to-br from-slate-50 via-emerald-50/60 to-cyan-50 px-6 py-5">
         <img
           src={image}
           alt={bookName}
-          className="mx-auto h-52 w-auto object-contain transition-transform duration-300 group-hover:scale-105 sm:h-56"
+          className="mx-auto h-48 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
         />
       </div>
 
-      <div className="mt-6 flex flex-wrap gap-2">
+      <div className="mt-4 flex flex-wrap gap-2">
         {tags.map((tag) => (
           <span
             key={tag}
-            className="rounded-full bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700"
+            className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-semibold text-emerald-700"
           >
             #{tag}
           </span>
         ))}
       </div>
 
-      <div className="mt-6 flex-1">
-        <h3 className="text-2xl font-black tracking-tight text-slate-900">
+      <div className="mt-4 flex-1">
+        <h3 className="text-xl font-extrabold leading-snug tracking-tight text-slate-900">
           {bookName}
         </h3>
-        <p className="mt-2 text-sm font-medium text-slate-500">By : {author}</p>
+        <p className="mt-1.5 text-sm font-medium text-slate-500">
+          By : {author}
+        </p>
 
-        <div className="my-6 border-t border-dashed border-slate-200" />
+        <div className="my-4 border-t border-dashed border-slate-200" />
 
-        <div className="flex flex-wrap items-center justify-between gap-3 text-sm text-slate-500">
-          <span className="rounded-full bg-slate-100 px-3 py-1 font-semibold text-slate-700">
+        <div className="flex flex-wrap items-center justify-between gap-3 text-sm">
+          <span className="rounded-full border border-slate-200 bg-slate-100 px-3 py-1 font-semibold text-slate-700">
             {category}
           </span>
           <span className="font-semibold text-slate-500">
@@ -42,25 +58,30 @@ const BookCard = ({ book }) => {
         </div>
       </div>
 
-      <div className="mt-6 flex flex-col justify-between gap-4 rounded-2xl bg-slate-50 px-4 py-3">
-
-          <p className="text-xs font-medium uppercase tracking-[0.2em] text-slate-400">
+      <div className="mt-4 flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50/70 px-4 py-3">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-400">
             Rating
           </p>
-          <div className="mt-1 text-lg font-extrabold text-amber-500 flex items-center justify-between">
-            <span>{rating}</span>
-
-            <span className="flex">
-              {[1, 2, 3, 4, 5].map((star ,index) => (
-                <span key={index}>
-                  {rating>=star?<IoIosStar />:rating >= star -0.5?<IoIosStarHalf />:<IoIosStarOutline />}
-                </span>
-              ))}
-            </span>
-
+          <span className="text-xl font-extrabold text-slate-800">
+            {rating}
+          </span>
         </div>
+        <span className="flex gap-0.5 text-xl text-amber-500">
+          {[1, 2, 3, 4, 5].map((star, index) => (
+            <span key={index}>
+              {rating >= star ? (
+                <IoIosStar />
+              ) : rating >= star - 0.5 ? (
+                <IoIosStarHalf />
+              ) : (
+                <IoIosStarOutline />
+              )}
+            </span>
+          ))}
+        </span>
       </div>
-    </article>
+    </Link>
   );
 };
 
