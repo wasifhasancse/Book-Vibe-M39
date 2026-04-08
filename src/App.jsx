@@ -1,4 +1,4 @@
-import { Outlet } from "react-router";
+import { Outlet, ScrollRestoration } from "react-router";
 import "./App.css";
 import Navbar from "./Components/Navbar/Navbar";
 import BookContextProvider from "./Context/BookContextProvider";
@@ -8,6 +8,7 @@ function App() {
   return (
     <>
       <BookContextProvider>
+        <ScrollRestoration/>
         <Navbar />
         <Outlet />
          <ToastContainer />

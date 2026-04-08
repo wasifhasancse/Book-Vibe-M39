@@ -1,12 +1,31 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Link, Outlet } from "react-router";
 import { BookContext } from "../../../Context/BookContextProvider";
 
 const ListedBook = () => {
-  const { wishListData, readListData,setSortingType } = useContext(BookContext);
+  const { wishListData, readListData, setSortingType } =
+    useContext(BookContext);
   const [activeTab, setActiveTab] = useState("wish");
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const [selectedSort, setSelectedSort] = useState("Select Sort");
+  const sortRef = useRef(null);
 
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (sortRef.current && !sortRef.current.contains(event.target)) {
+        setIsSortOpen(false);
+      }
+    };
 
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, []);
+
+  const handleSortChange = (label, value) => {
+    setSelectedSort(label);
+    setSortingType(value);
+    setIsSortOpen(false);
+  };
 
   return (
     <section className="relative min-h-screen overflow-hidden bg-linear-to-b from-[#fff9f2] via-[#fffefc] to-[#ecfdfa] px-4 py-10 sm:px-6 lg:px-8">
@@ -41,29 +60,55 @@ const ListedBook = () => {
               </div>
             </div>
 
-            <div className="mx-auto w-full max-w-xs lg:mx-0 lg:w-72">
+            <div
+              className="mx-auto w-full max-w-xs lg:mx-0 lg:w-72"
+              ref={sortRef}
+            >
               <label className="mb-2 block text-xs font-bold uppercase tracking-[0.18em] text-slate-500">
                 Sort By
               </label>
 
-              <div className="dropdown">
-                <div tabIndex={0} role="button" className="btn m-1">
-                  Select Sort
-                </div>
-                <ul
-                  tabIndex="-1"
-                  className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setIsSortOpen((prev) => !prev)}
+                  className="flex w-full items-center justify-between rounded-2xl border border-emerald-200 bg-linear-to-r from-white to-emerald-50/60 px-4 py-3 text-sm font-semibold text-slate-700 shadow-sm transition hover:border-emerald-300 hover:bg-emerald-50/50"
                 >
-                  <li>
-                    <a onClick={()=>setSortingType('rating')}>Rating</a>
-                  </li>
-                  <li>
-                    <a onClick={()=>setSortingType('pages')}>Number of pages</a>
-                  </li>
-                  <li>
-                    <a onClick={()=>setSortingType('year')}>Publisher year</a>
-                  </li>
-                </ul>
+                  <span>{selectedSort}</span>
+                  <span
+                    className={`h-2.5 w-2.5 rotate-45 border-b-2 border-r-2 border-emerald-500 transition-transform duration-200 ${
+                      isSortOpen ? "-translate-y-0.5 rotate-225" : ""
+                    }`}
+                  />
+                </button>
+
+                {isSortOpen && (
+                  <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-2xl border border-emerald-100 bg-white shadow-lg shadow-emerald-100/60">
+                    <button
+                      type="button"
+                      onClick={() => handleSortChange("Rating", "rating")}
+                      className="block w-full px-4 py-2.5 text-left text-sm font-medium text-slate-600 transition hover:bg-emerald-50 hover:text-emerald-700"
+                    >
+                      Rating
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        handleSortChange("Number of Pages", "pages")
+                      }
+                      className="block w-full px-4 py-2.5 text-left text-sm font-medium text-slate-600 transition hover:bg-emerald-50 hover:text-emerald-700"
+                    >
+                      Number of Pages
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => handleSortChange("Publisher Year", "year")}
+                      className="block w-full px-4 py-2.5 text-left text-sm font-medium text-slate-600 transition hover:bg-emerald-50 hover:text-emerald-700"
+                    >
+                      Publisher Year
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>

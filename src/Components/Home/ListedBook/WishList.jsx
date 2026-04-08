@@ -6,20 +6,21 @@ const WishList = () => {
   const [filtersData, setFilterData] = useState(wishListData);
 
   useEffect(() => {
-    if (sortingType == 'rating') {
-    const filter = [...wishListData].sort((a, b) => a.rating - b.rating)
-    setFilterData(filter)
-  }
-  else if (sortingType == 'pages') {
-    const filter = [...wishListData].sort((a, b) => a.totalPages - b.totalPages)
-    setFilterData(filter)
-
-  }
-  else if (sortingType == 'year') {
-    const filter = [...wishListData].sort((a, b) => a.yearOfPublishing - b.yearOfPublishing)
-    setFilterData(filter)
- }
-  },[sortingType,wishListData])
+    if (sortingType == "rating") {
+      const filter = [...wishListData].sort((a, b) => a.rating - b.rating);
+      setFilterData(filter);
+    } else if (sortingType == "pages") {
+      const filter = [...wishListData].sort(
+        (a, b) => a.totalPages - b.totalPages,
+      );
+      setFilterData(filter);
+    } else if (sortingType == "year") {
+      const filter = [...wishListData].sort(
+        (a, b) => a.yearOfPublishing - b.yearOfPublishing,
+      );
+      setFilterData(filter);
+    }
+  }, [sortingType, wishListData]);
   return (
     <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
       {filtersData.map((book, index) => (
