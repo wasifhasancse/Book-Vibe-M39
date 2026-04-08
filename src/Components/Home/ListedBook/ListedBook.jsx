@@ -2,9 +2,8 @@ import { useContext, useState } from "react";
 import { Link, Outlet } from "react-router";
 import { BookContext } from "../../../Context/BookContextProvider";
 
-
 const ListedBook = () => {
-const {wishListData,readListData} = useContext(BookContext)
+  const { wishListData, readListData,setSortingType } = useContext(BookContext);
   const [activeTab, setActiveTab] = useState("wish");
 
 
@@ -42,20 +41,37 @@ const {wishListData,readListData} = useContext(BookContext)
               </div>
             </div>
 
-            <div
-              className="mx-auto w-full max-w-xs lg:mx-0 lg:w-72"
-            >
+            <div className="mx-auto w-full max-w-xs lg:mx-0 lg:w-72">
               <label className="mb-2 block text-xs font-bold uppercase tracking-[0.18em] text-slate-500">
                 Sort By
               </label>
 
+              <div className="dropdown">
+                <div tabIndex={0} role="button" className="btn m-1">
+                  Select Sort
+                </div>
+                <ul
+                  tabIndex="-1"
+                  className="dropdown-content menu bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm"
+                >
+                  <li>
+                    <a onClick={()=>setSortingType('rating')}>Rating</a>
+                  </li>
+                  <li>
+                    <a onClick={()=>setSortingType('pages')}>Number of pages</a>
+                  </li>
+                  <li>
+                    <a onClick={()=>setSortingType('year')}>Publisher year</a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
 
           <div className="mt-7 flex justify-center lg:justify-start">
             <div className="menu menu-horizontal rounded-full border border-slate-200 bg-white/80 px-2 py-1 gap-2">
               <Link
-                to={'/listedBooks'}
+                to={"/listedBooks"}
                 onClick={() => setActiveTab("wish")}
                 className={`rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 ${
                   activeTab === "wish"
@@ -66,7 +82,7 @@ const {wishListData,readListData} = useContext(BookContext)
                 Wish List
               </Link>
               <Link
-                to={'/listedBooks/readList'}
+                to={"/listedBooks/readList"}
                 onClick={() => setActiveTab("read")}
                 className={`rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 ${
                   activeTab === "read"

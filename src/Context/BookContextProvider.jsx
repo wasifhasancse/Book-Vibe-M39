@@ -6,6 +6,7 @@ export const BookContext = createContext();
 const BookContextProvider = ({ children }) => {
   const [wishListData, setWishListData] = useState([]);
   const [readListData, setReadListData] = useState([]);
+  const [sortingType, setSortingType] = useState('')
 
   const manageReadList = (getBook) => {
     const existingReadBook = readListData.find(book => book.bookId == getBook.bookId)
@@ -39,7 +40,7 @@ const BookContextProvider = ({ children }) => {
     manageReadList,
     manageWishList,readListData, setReadListData,
     wishListData,
-    setWishListData,
+    setWishListData,sortingType, setSortingType
   };
   return <BookContext.Provider value={data}>{children}</BookContext.Provider>;
 };
