@@ -1,28 +1,11 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { Link, Outlet } from "react-router";
 import { BookContext } from "../../../Context/BookContextProvider";
 
 
 const ListedBook = () => {
 const {wishListData,readListData} = useContext(BookContext)
-
   const [activeTab, setActiveTab] = useState("wish");
-  const [sortBy, setSortBy] = useState("All");
-  const [isSortOpen, setIsSortOpen] = useState(false);
-  const sortMenuRef = useRef(null);
-
-  const sortOptions = ["All", "Pages", "Rating", "Published Year"];
-
-  useEffect(() => {
-    const handleOutsideClick = (event) => {
-      if (sortMenuRef.current && !sortMenuRef.current.contains(event.target)) {
-        setIsSortOpen(false);
-      }
-    };
-
-    document.addEventListener("mousedown", handleOutsideClick);
-    return () => document.removeEventListener("mousedown", handleOutsideClick);
-  }, []);
 
 
 
@@ -65,44 +48,7 @@ const {wishListData,readListData} = useContext(BookContext)
               <label className="mb-2 block text-xs font-bold uppercase tracking-[0.18em] text-slate-500">
                 Sort By
               </label>
-              <div className="relative">
-                <button
-                  type="button"
-                  className="flex w-full items-center justify-between rounded-2xl border border-slate-200 bg-white px-4 py-3 text-sm font-bold text-slate-700 outline-none transition duration-200 hover:bg-slate-50 focus:border-slate-300 focus:ring-4 focus:ring-slate-100"
-                >
-                  <span>{sortBy}</span>
-                  <span
-                    className={`h-2.5 w-2.5 rotate-45 border-b-2 border-r-2 border-slate-400 transition ${
-                      isSortOpen ? "-translate-y-0.5 rotate-[-135deg]" : ""
-                    }`}
-                  />
-                </button>
 
-                {isSortOpen && (
-                  <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-2xl border border-slate-200 bg-white">
-                    {sortOptions.map((option) => (
-                      <button
-                        key={option}
-                        type="button"
-                        onClick={() => {
-                          setSortBy(option);
-                          setIsSortOpen(false);
-                        }}
-                        className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-sm font-semibold transition ${
-                          sortBy === option
-                            ? "bg-emerald-50 text-emerald-700"
-                            : "text-slate-600 hover:bg-slate-100"
-                        }`}
-                      >
-                        <span>{option}</span>
-                        {sortBy === option && (
-                          <span className="text-xs font-bold">Selected</span>
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
             </div>
           </div>
 

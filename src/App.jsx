@@ -2,6 +2,7 @@ import { Outlet } from "react-router";
 import "./App.css";
 import Navbar from "./Components/Navbar/Navbar";
 import BookContextProvider from "./Context/BookContextProvider";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
       <BookContextProvider>
         <Navbar />
         <Outlet />
+         <ToastContainer />
       </BookContextProvider>
     </>
   );

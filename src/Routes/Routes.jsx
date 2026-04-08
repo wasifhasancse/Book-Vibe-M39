@@ -5,6 +5,7 @@ import Home from "../Components/Home/Home";
 import ListedBook from "../Components/Home/ListedBook/ListedBook";
 import WishList from "../Components/Home/ListedBook/WishList";
 import ReadList from "../Components/Home/ListedBook/ReadList";
+import Error from "../Components/Error/Error";
 
 export const router = createBrowserRouter([
   {
@@ -47,7 +48,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "*",
-        element: <p>404</p>,
+        Component: Error
       },
     ],
   },

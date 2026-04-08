@@ -1,4 +1,5 @@
 import { createContext, useState } from "react";
+import { toast } from "react-toastify";
 
 export const BookContext = createContext();
 
@@ -10,24 +11,27 @@ const BookContextProvider = ({ children }) => {
     const existingReadBook = readListData.find(book => book.bookId == getBook.bookId)
 
     if (existingReadBook) {
-      alert('alredy')
+      toast.warning(`'${existingReadBook.bookName}' is already in Read List!`)
       return
     }
+    toast.success(`'${getBook.bookName}' is added in Read List!`)
     const readListBook = [...wishListData, getBook];
     setReadListData(readListBook);
   };
+
   const manageWishList = (getBook) => {
     const existingReadBook = readListData.find(book => book.bookId == getBook.bookId)
     if (existingReadBook) {
-      alert('alredy read list')
+      toast.warning(`'${existingReadBook.bookName}' is already in Read List!`)
       return
     }
     const existingWishBook = wishListData.find(book => book.bookId == getBook.bookId)
 
     if (existingWishBook) {
-      alert('alredy')
+      toast.error(`'${existingWishBook.bookName}' is already in Wish List!`)
       return
     }
+    toast.info(`'${getBook.bookName}' is added in Wish List!`)
     const wishListBook = [...wishListData, getBook];
     setWishListData(wishListBook);
   };
