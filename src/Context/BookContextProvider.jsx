@@ -1,14 +1,21 @@
 import { createContext, useState } from "react";
 import { toast } from "react-toastify";
+import {
+  getReadlistLocalDB,
+  getWishlistLocalDB,
+  setReadlistLocalDB,
+  setWishlistLocalDB,
+} from "../LocalDB/LocalDB";
 
 export const BookContext = createContext();
 
 const BookContextProvider = ({ children }) => {
-  const [wishListData, setWishListData] = useState([]);
-  const [readListData, setReadListData] = useState([]);
+  const [wishListData, setWishListData] = useState(() => getWishlistLocalDB());
+  const [readListData, setReadListData] = useState(() => getReadlistLocalDB());
   const [sortingType, setSortingType] = useState("");
 
   const manageReadList = (getBook) => {
+    setReadlistLocalDB(getBook);
     const existingReadBook = readListData.find(
       (book) => book.bookId == getBook.bookId,
     );
@@ -26,11 +33,12 @@ const BookContextProvider = ({ children }) => {
       return;
     }
     toast.success(`'${getBook.bookName}' is added in Read List!`);
-    const readListBook = [...wishListData, getBook];
+    const readListBook = [...readListData, getBook];
     setReadListData(readListBook);
   };
 
   const manageWishList = (getBook) => {
+    setWishlistLocalDB(getBook);
     const existingReadBook = readListData.find(
       (book) => book.bookId == getBook.bookId,
     );
